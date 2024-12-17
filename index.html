@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume and Feedback Form</title>
+    <style>
+        /* General Body Styling */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            font-family: Arial, sans-serif;
+            color: #fff; /* White text color for contrast */
+            
+        }
+
+        /* Container Styling */
+        .button-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+
+        /* Heading Styling */
+        h1 {
+            margin-bottom: 30px;
+            font-size: 28px; /* Larger font size for impact */
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); /* Text shadow for depth */
+        }
+
+        /* Button Styling */
+        button {
+            display: inline-block;
+            width: 200px;
+            height: 50px;
+            margin: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for buttons */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            button {
+                width: 150px;
+                height: 40px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px; /* Adjust heading size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <h1>JavaScript projects</h1>
+        <button onclick="window.location.href='resume.html'">Resume</button>
+        <button onclick="window.location.href='feedback.html'">Feedback Form</button>
+    </div>
+</body>
+</html>
