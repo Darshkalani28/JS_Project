@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add a submit event listener
     form.addEventListener("submit", (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+        e.preventDefault();  // Prevent default form submission behavior
 
         // Fetch values from form inputs
         const name = document.getElementById("myname").value;
@@ -13,13 +13,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const division = document.getElementById("div1").value;
         const suggestion = document.getElementById("myarea").value;
 
-        // Log the data to the console
-        console.log("Feedback Submitted:");
-        console.log("Name:", name);
-        console.log("Email:", email);
-        console.log("Division:", division);
-        console.log("Suggestion:", suggestion);
-
+        if (name && email && division && suggestion) {        
+            // Log the data to the console
+            console.log("Feedback Submitted:");
+            console.log("Name:", name);
+            console.log("Email:", email);
+            console.log("Division:", division);
+            console.log("Suggestion:", suggestion);
+        
+            document.getElementById("thank").innerHTML = `Thank you ${name} for your feedback`
+        } else {
+            alert("Enter require fields!")
+        }
         // Optional: Clear the form fields
         form.reset();
     });
