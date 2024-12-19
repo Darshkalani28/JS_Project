@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #1c92d2, #f2fcfe);
+        }
+        .container {
+            text-align: center;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333333;
+            font-size: 28px;
+        }
+        .dice {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+        }
+        .dice .player {
+            text-align: center;
+        }
+        .dice img {
+            width: 70px;
+            height: 70px;
+            margin: 10px;
+        }
+        .btn {
+            padding: 12px 25px;
+            background: #1c92d2;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .btn:hover {
+            background: #1669a3;
+            transform: scale(1.05);
+        }
+        .winner {
+            font-size: 22px;
+            margin-top: 25px;
+            font-weight: bold;
+            color: #444444;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .home-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff6f61, #ff3d2e); /* Gradient from coral to a deeper red */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .home-btn:hover {
+            background: linear-gradient(135deg, #ff3d2e, #ff6f61); /* Inverse gradient for hover */
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slight shadow for hover effect */
+        }
+
+        .home-btn:active {
+            background: #d9534f; /* Dark red when the button is clicked */
+            transform: scale(0.98); /* Slight shrink effect on click */
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-btn">Home</a>
+    <div class="container">
+        <h1>Dice Game 🎲</h1>
+        <div class="dice">
+            <div class="player">
+                <h2>Player 1</h2>
+                <img id="dice1Image" src="./person.jpg" alt="Dice">
+                <p id="dice1Value">1</p>
+            </div>
+            <div class="player">
+                <h2>Player 2</h2>
+                <img id="dice2Image" src="./person.jpg" alt="Dice">
+                <p id="dice2Value">1</p>
+            </div>
+        </div>
+        <button class="btn" onclick="rollDice()">Roll the Dice!</button>
+        <div class="winner" id="winner"></div>
+    </div>
+
+    <script>
+        function rollDice() {
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+
+            
+            document.getElementById('dice1Value').innerText = dice1;
+            document.getElementById('dice2Value').innerText = dice2;
+
+            let winnerText = "";
+            if (dice1 > dice2) {
+                winnerText = "🎉 Player 1 Wins!";
+            } else if (dice2 > dice1) {
+                winnerText = "🎉 Player 2 Wins!";
+            } else {
+                winnerText = "🤝 It's a Tie!";
+            }
+
+            document.getElementById('winner').innerText = winnerText;
+        }
+    </script>
+</body>
+</html>

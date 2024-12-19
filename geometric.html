@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Geometry Calculator</title>
+    <style>
+        body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb); /* Softer gradient */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.section {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0; /* Subtle border */
+}
+
+.section:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    font-size: 22px;
+    color: #2d3748;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section svg,
+.section img {
+    margin-bottom: 15px;
+}
+
+.section input {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.section input:focus {
+    border-color: #3498db; /* Highlighted border */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.section button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.section button:hover {
+    background-color: #1d78b5;
+    transform: scale(1.05);
+}
+
+.section button:active {
+    transform: scale(0.95);
+}
+
+.result {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .section input {
+        font-size: 14px;
+    }
+
+    .section button {
+        font-size: 14px;
+    }
+}
+input[type="submit"], .home-button {
+            padding: 10px 20px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+input[type="submit"]:hover, .home-button:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: scale(1.05);
+        }
+
+        /* Home Button */
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+    <button class="home-button" onclick="window.location.href='index.html'">Home</button>
+
+
+<div class="container">
+    <!-- Cube Section -->
+    <div class="section">
+        <h2>Cube</h2>
+        <svg xmlns="http://www.w3.org/2000/svg"  width="128" height="128" fill="none" viewBox="0 0 16 16" id="cube">
+  <path fill="#212121" d="M7.81635 1.03383C7.93558 0.98612 8.0686 0.986119 8.18784 1.03383L14.6879 3.63465C14.8778 3.7106 15.0022 3.89447 15.0022 4.09892C15.0022 4.11674 15.0013 4.13441 14.9994 4.15186C14.9996 4.15818 14.9998 4.16452 14.9998 4.1709L14.9998 11.8691C14.9998 12.0727 14.8763 12.256 14.6876 12.3325L8.19463 14.9649C8.12932 14.9913 8.06168 15.003 7.99544 15.0015C7.93136 15.0017 7.86696 14.9896 7.80585 14.9649L1.31288 12.3325C1.12419 12.256 1.00073 12.0727 1.00073 11.8691L1.00073 4.1709C1.00073 4.15527 1.00145 4.1398 1.00285 4.12454C1.00242 4.11604 1.0022 4.1075 1.0022 4.09892C1.00218 3.89447 1.12663 3.7106 1.31645 3.63465L7.81635 1.03383ZM8.49435 13.7643L13.9998 11.5323L13.9998 4.83827L8.50018 7.03736L8.49435 13.7643ZM2.00073 4.83672L2.00073 11.5323L7.49435 13.7595L7.50018 7.03585L2.00073 4.83672ZM8.0021 2.03659L2.84847 4.09872L8.00208 6.15956L13.1559 4.09872L8.0021 2.03659Z"></path>
+</svg>
+        <input type="number" id="cubeSide" placeholder="Side Length" />
+        <button onclick="calculateCube()">Calculate</button>
+        <div class="result" id="cubeResult"></div>
+    </div>
+
+    <!-- Sphere Section -->
+    <div class="section">
+        <h2>Sphere</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="none" viewBox="0 0 128 128" id="360-rotation">
+  <path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-width="6" d="M80.0773 47.246C90.6977 48.8905 99.4729 54.5035 102.769 58.4781C106.065 62.4528 105.698 66.793 101.741 70.6623C97.7833 74.5315 90.5144 77.6559 81.3353 79.4331C76.5952 80.3509 71.519 80.8759 66.3838 81M47.2616 80.2874C39.6861 78.1931 34.0914 76.3881 28.8692 72.7864C23.6471 69.1847 21.8224 64.9083 23.747 60.7815C25.6716 56.6547 31.2092 52.9696 39.2924 50.4365C47.3756 47.9035 57.4322 46.7017 67.5237 47.063"></path>
+  <path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-width="6" d="M47.246 47.9227C49.2853 39.0656 54.5035 28.5271 58.4781 25.2312C62.4528 21.9353 66.793 22.3015 70.6623 26.2591C74.5315 30.2167 77.6559 37.4856 79.4331 46.6647C80.3509 51.4048 80.8759 56.481 81 61.6162M47.063 60.4763C46.7017 70.5679 47.9035 80.6244 50.4365 88.7076C52.9696 96.7908 56.6547 102.328 60.7815 104.253C64.9084 106.178 69.1847 104.353 72.7864 99.1308C75.8484 94.6912 78.2384 88.0631 79.6401 80.2238"></path>
+  <circle cx="41" cy="41" r="41" stroke="#1B1B1B" stroke-width="6" transform="matrix(0 -1 -1 0 105 105)"></circle>
+</svg>
+        <input type="number" id="sphereRadius" placeholder="Radius" />
+        <button onclick="calculateSphere()">Calculate</button>
+        <div class="result" id="sphereResult"></div>
+    </div>
+
+    <!-- Cylinder Section -->
+    <div class="section">
+        <h2>Cylinder</h2>
+<img src="https://cdn-icons-png.flaticon.com/512/476/476008.png" width="128" height="128">
+        <input type="number" id="cylinderRadius" placeholder="Radius" />
+        <input type="number" id="cylinderHeight" placeholder="Height" />
+        <button onclick="calculateCylinder()">Calculate</button>
+        <div class="result" id="cylinderResult"></div>
+    </div>
+
+    <!-- Cone Section -->
+    <div class="section">
+        <h2>Cone</h2>
+        <svg xmlns="http://www.w3.org/2000/svg"  width="128" height="128" viewBox="0 0 32 32" id="cone">
+  <g>
+    <path d="M28,9c0-3.93-5.27-7-12-7S4,5.08,4,9a4.41,4.41,0,0,0,.58,2.17.74.74,0,0,0,.08.29l8.9,17a2.75,2.75,0,0,0,4.88,0l8.9-17a.74.74,0,0,0,.08-.29A4.41,4.41,0,0,0,28,9ZM16,4c5.42,0,10,2.29,10,5s-4.58,5-10,5S6,11.72,6,9,10.58,4,16,4Zm.66,23.6a.74.74,0,0,1-1.32,0L8.5,14.51A18.15,18.15,0,0,0,16,16a18.15,18.15,0,0,0,7.5-1.5Z"></path>
+  </g>
+</svg>
+        <input type="number" id="coneRadius" placeholder="Radius" />
+        <input type="number" id="coneHeight" placeholder="Height" />
+        <button onclick="calculateCone()">Calculate</button>
+        <div class="result" id="coneResult"></div>
+    </div>
+
+    <!-- Rectangular Prism Section -->
+    <div class="section">
+        <h2>Rectangular Prism</h2>
+        <img src="https://static.thenounproject.com/png/834860-200.png" width="128" height="128">
+        <input type="number" id="rectPrismLength" placeholder="Length" />
+        <input type="number" id="rectPrismWidth" placeholder="Width" />
+        <input type="number" id="rectPrismHeight" placeholder="Height" />
+        <button onclick="calculateRectPrism()">Calculate</button>
+        <div class="result" id="rectPrismResult"></div>
+    </div>
+
+    <!-- Pyramid Section -->
+    <div class="section">
+        <h2>Pyramid</h2>
+        <svg xmlns="http://www.w3.org/2000/svg"  width="128" height="128" enable-background="new 0 0 67 67" viewBox="0 0 67 67" id="pyramid">
+  <path d="M39.7 44L37 42.6c-.5-.2-1.1 0-1.3.5-.2.5 0 1.1.5 1.3l2.7 1.3c.5.2 1.1 0 1.3-.5C40.4 44.8 40.2 44.2 39.7 44zM50.5 49.3l-2.7-1.3c-.5-.2-1.1 0-1.3.5-.2.5 0 1.1.5 1.3l2.7 1.3c.5.2 1.1 0 1.3-.5C51.2 50.1 51 49.5 50.5 49.3zM26.3 46.7l2.7-1.3c.5-.2.7-.8.5-1.3-.2-.5-.8-.7-1.3-.5l-2.7 1.3c-.5.2-.7.8-.5 1.3C25.2 46.7 25.8 46.9 26.3 46.7zM15.5 52l2.7-1.3c.5-.2.7-.8.5-1.3-.2-.5-.8-.7-1.3-.5l-2.7 1.3c-.5.2-.7.8-.5 1.3C14.4 52 15 52.2 15.5 52zM20.9 49.3l2.7-1.3c.5-.2.7-.8.5-1.3-.2-.5-.8-.7-1.3-.5L20 47.5c-.5.2-.7.8-.5 1.3C19.8 49.4 20.4 49.6 20.9 49.3zM45.1 46.6l-2.7-1.3c-.5-.2-1.1 0-1.3.5-.2.5 0 1.1.5 1.3l2.7 1.3c.5.2 1.1 0 1.3-.5C45.8 47.5 45.6 46.9 45.1 46.6z"></path>
+  <path d="M9.2,54.6C9.2,54.6,9.2,54.6,9.2,54.6l23.8,11.8c0,0,0,0,0,0c0.3,0.1,0.6,0.1,0.8,0c0,0,0,0,0,0l23.8-11.7
+		c0.5-0.2,0.6-0.9,0.5-1.3C43.6,18.9,49.2,30.9,34.4,1.1c-0.3-0.7-1.4-0.7-1.8,0c-0.1,0.1-12.2,24.7-12,24.3l-11.9,28c0,0,0,0,0,0
+		C8.6,53.8,8.7,54.4,9.2,54.6z M52.3,52.4l2.7,1.3c0,0,0.1,0,0.1,0l-13.9,6.9l-6.7,3.3l0-20.9c0.1-0.1,0.2-0.2,0.3-0.3
+		c0.2-0.4,0.1-0.9-0.3-1.2v-0.3l0-8.8c1.1-0.5,3.2-1.6,10.4-5.2l10.4,24.6l-2.2-1.1c-0.5-0.2-1.1,0-1.3,0.5
+		C51.6,51.5,51.8,52.1,52.3,52.4z M42.6,25.5l0.6,0.3L34.5,30v-8.6l0.1,0c0.5,0.2,1.1,0,1.3-0.5c0.2-0.5,0-1.1-0.5-1.3l-0.9-0.5V5.8
+		l8.8,17.8c-0.4-0.1-0.9,0.1-1.1,0.5C41.9,24.6,42.1,25.2,42.6,25.5z M22.1,27.1l1,0.5l9.4,4.6v9.1l-1.7,0.9
+		c-0.5,0.2-0.7,0.8-0.5,1.3c0.2,0.5,0.8,0.7,1.3,0.5l0.8-0.4v20.3l-6.8-3.4L12,53.7l0.9-0.4c0.5-0.2,0.7-0.8,0.5-1.3
+		c-0.2-0.5-0.8-0.7-1.3-0.5l-0.3,0.1L22.1,27.1z M32.5,19.2l-0.6,0.3c-0.5,0.2-0.7,0.8-0.5,1.3c0.2,0.4,0.7,0.6,1.1,0.5V30l-8.7-4.3
+		l0.9-0.4c0.5-0.2,0.7-0.8,0.5-1.3c-0.2-0.5-0.8-0.7-1.3-0.5l0,0l8.8-17.8V19.2z"></path>
+  <path d="M40.8 22.3L38.1 21c-.5-.2-1.1 0-1.3.5-.2.5 0 1.1.5 1.3l2.7 1.3c.5.2 1.1 0 1.3-.5C41.5 23.2 41.3 22.6 40.8 22.3zM27.4 24l2.7-1.3c.5-.2.7-.8.5-1.3s-.8-.7-1.3-.5l-2.7 1.3C26 22.4 25.8 23 26 23.5 26.3 24 26.9 24.2 27.4 24z"></path>
+</svg>
+        <input type="number" id="pyramidBase" placeholder="Base Length" />
+        <input type="number" id="pyramidHeight" placeholder="Height" />
+        <button onclick="calculatePyramid()">Calculate</button>
+        <div class="result" id="pyramidResult"></div>
+    </div>
+
+    <!-- Tetrahedron Section -->
+    <div class="section">
+        <h2>Tetrahedron</h2>
+        <svg xmlns="http://www.w3.org/2000/svg"  width="128" height="128" enable-background="new 0 0 67 67" viewBox="0 0 67 67" id="tetrahedron">
+  <path d="M4.2,59.5c0.3,0.1-3.2-0.4,58.2,7c0.7,0.1,1.4-0.7,1-1.4l-29.1-64c0,0,0,0,0,0c-0.1-0.3-0.5-0.6-0.9-0.6
+		c-0.4,0-0.8,0.2-0.9,0.5l-29.1,57c0,0,0,0,0,0C3.3,58.6,3.5,59.3,4.2,59.5z M32.8,5c0.3,0.5,0.8,0.6,1.3,0.4l26.7,58.8
+		c0,0-0.1,0.1-0.1,0.1c0,0,0,0,0,0l-1.4-0.2c0.2,0,0.5-0.2,0.6-0.4c0.3-0.5,0.2-1.1-0.3-1.4l-2.5-1.7c-0.5-0.3-1.1-0.2-1.4,0.3
+		c-0.3,0.5-0.2,1.1,0.3,1.4l2.5,1.7c0.1,0,0.1,0.1,0.2,0.1L7.8,57.9c0-0.2,0-0.3,0-0.5c-0.2-0.5-0.7-0.8-1.3-0.6l-0.1,0L32.8,5z"></path>
+  <path d="M35.6 30.4c-.6 0-1 .5-.9 1.1l.2 3c0 .5.5.9 1 .9 0 0 0 0 .1 0 .6 0 1-.5.9-1.1l-.2-3C36.6 30.8 36.1 30.4 35.6 30.4zM34.1 11.5C34.2 11.5 34.2 11.5 34.1 11.5c.6 0 1-.5 1-1.1l-.2-3c0-.6-.5-1-1.1-.9-.6 0-1 .5-.9 1.1l.2 3C33.2 11.1 33.6 11.5 34.1 11.5zM36 36.4c-.6 0-1 .5-.9 1.1l.2 3c0 .5.5.9 1 .9 0 0 0 0 .1 0 .6 0 1-.5.9-1.1l-.2-3C37 36.8 36.5 36.4 36 36.4zM10 57.7l2.8-.9c.5-.2.8-.7.6-1.3s-.7-.8-1.3-.6l-2.8.9c-.5.2-.8.7-.6 1.3C9 57.6 9.5 57.9 10 57.7zM34.7 18.5c-.6 0-1 .5-.9 1.1l.2 3c0 .5.5.9 1 .9 0 0 0 0 .1 0 .6 0 1-.5.9-1.1l-.2-3C35.7 18.8 35.3 18.4 34.7 18.5zM15.7 55.9l2.8-.9c.5-.2.8-.7.6-1.3-.2-.5-.7-.8-1.3-.6L15.1 54c-.5.2-.8.7-.6 1.3C14.7 55.7 15.2 56 15.7 55.9zM34.3 12.5c-.6 0-1 .5-.9 1.1l.2 3c0 .5.5.9 1 .9 0 0 0 0 .1 0 .6 0 1-.5.9-1.1l-.2-3C35.3 12.8 34.8 12.4 34.3 12.5zM35.1 24.4c-.6 0-1 .5-.9 1.1l.2 3c0 .5.5.9 1 .9 0 0 0 0 .1 0 .6 0 1-.5.9-1.1l-.2-3C36.2 24.8 35.7 24.4 35.1 24.4zM32.8 50.2l2.8-.9c.3-.1.5-.3.6-.6l2.4 1.7c.5.3 1.1.2 1.4-.3.3-.5.2-1.1-.3-1.4l-2.4-1.7c.2-.2.3-.5.3-.8l-.2-3c0-.6-.5-1-1.1-.9-.6 0-1 .5-.9 1.1l.2 3c0 .3.2.5.4.7 0 0-.1.1-.1.1 0 .1-.1.1-.1.2-.2-.2-.5-.2-.8-.1l-2.8.9c-.5.2-.8.7-.6 1.3C31.7 50.1 32.3 50.4 32.8 50.2zM27.1 52.1l2.8-.9c.5-.2.8-.7.6-1.3s-.7-.8-1.3-.6l-2.8.9c-.5.2-.8.7-.6 1.3C26 52 26.6 52.3 27.1 52.1zM21.4 54l2.8-.9c.5-.2.8-.7.6-1.3s-.7-.8-1.3-.6l-2.8.9c-.5.2-.8.7-.6 1.3C20.4 53.9 20.9 54.1 21.4 54zM48.6 57.2c.5.3 1.1.2 1.4-.3.3-.5.2-1.1-.3-1.4l-2.5-1.7c-.5-.3-1.1-.2-1.4.3-.3.5-.2 1.1.3 1.4L48.6 57.2zM43.7 53.8c.5.3 1.1.2 1.4-.3.3-.5.2-1.1-.3-1.4l-2.5-1.7c-.5-.3-1.1-.2-1.4.3-.3.5-.2 1.1.3 1.4L43.7 53.8zM53.6 60.6c.5.3 1.1.2 1.4-.3.3-.5.2-1.1-.3-1.4l-2.5-1.7c-.5-.3-1.1-.2-1.4.3-.3.5-.2 1.1.3 1.4L53.6 60.6z"></path>
+</svg>
+        <input type="number" id="tetrahedronEdge" placeholder="Edge Length" />
+        <button onclick="calculateTetrahedron()">Calculate</button>
+        <div class="result" id="tetrahedronResult"></div>
+    </div>
+
+    <!-- Hemisphere Section -->
+    <div class="section">
+        <h2>Hemisphere</h2>
+        <svg xmlns="http://www.w3.org/2000/svg"  width="128" height="128" viewBox="0 0 256 256" id="globe-hemisphere-west">
+  <rect width="256" height="256" fill="none"></rect>
+  <circle cx="128" cy="128" r="96" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></circle>
+  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M214.16458,170.37222l-54.28632-33.38846a7.99993,7.99993,0,0,0-3.12236-1.114l-22.81867-3.07595a8,8,0,0,0-8.37592,4.67178l-13.69878,30.73831a8,8,0,0,0,1.433,8.68736l18.79995,20.33464a8,8,0,0,1,1.98022,6.9502l-3.8294,19.79638"></path>
+  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M64.95216,55.60635,56.00794,76.75607a8,8,0,0,0-.12321,5.92293l11.49086,30.66819a8,8,0,0,0,5.81037,5.01448l21.42993,4.60592a8,8,0,0,1,5.5197,4.3358l3.80564,7.862a8,8,0,0,0,7.20075,4.51442h13.43256"></path>
+  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M152.45823,35.14852l9.33366,16.7184a8,8,0,0,1-1.6191,9.83314L133.26192,86.0376a8.00033,8.00033,0,0,1-1.49868,1.06968l-12.24176,6.76034a8,8,0,0,1-3.86737.9969H94.30873a8,8,0,0,0-7.37259,4.89437l-8.32721,19.76833"></path>
+</svg>
+        <input type="number" id="hemisphereRadius" placeholder="Radius" />
+        <button onclick="calculateHemisphere()">Calculate</button>
+        <div class="result" id="hemisphereResult"></div>
+    </div>
+
+    <!-- Torus Section -->
+    <div class="section">
+        <h2>Torus</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5xmYNd3yFuOvqaRjMb259tGXph10nt4X1Fg&s" width="128" height="128">
+        <input type="number" id="torusRadius" placeholder="Radius" />
+        <input type="number" id="torusTubeRadius" placeholder="Tube Radius" />
+        <button onclick="calculateTorus()">Calculate</button>
+        <div class="result" id="torusResult"></div>
+    </div>
+</div>
+
+<script>
+    // Cube Calculation
+    function calculateCube() {
+        const side = parseFloat(document.getElementById('cubeSide').value);
+        if (side > 0) {
+            const volume = Math.pow(side, 3);
+            const surfaceArea = 6 * Math.pow(side, 2);
+            document.getElementById('cubeResult').innerText = 
+                `Volume: ${volume.toFixed(2)}, Surface Area: ${surfaceArea.toFixed(2)}`;
+        } else {
+            document.getElementById('cubeResult').innerText = "Enter a valid side length.";
+        }
+    }
+
+    // Sphere Calculation
+    function calculateSphere() {
+        const radius = parseFloat(document.getElementById('sphereRadius').value);
+        if (radius > 0) {
+            const volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
+            const surfaceArea = 4 * Math.PI * Math.pow(radius, 2);
+            document.getElementById('sphereResult').innerText = 
+                `Volume: ${volume.toFixed(2)}, Surface Area: ${surfaceArea.toFixed(2)}`;
+        } else {
+            document.getElementById('sphereResult').innerText = "Enter a valid radius.";
+        }
+    }
+
+    // Cylinder Calculation
+    function calculateCylinder() {
+        const radius = parseFloat(document.getElementById('cylinderRadius').value);
+        const height = parseFloat(document.getElementById('cylinderHeight').value);
+        if (radius > 0 && height > 0) {
+            const volume = Math.PI * Math.pow(radius, 2) * height;
+            const surfaceArea = 2 * Math.PI * radius * (radius + height);
+            document.getElementById('cylinderResult').innerText = 
+                `Volume: ${volume.toFixed(2)}, Surface Area: ${surfaceArea.toFixed(2)}`;
+        } else {
+            document.getElementById('cylinderResult').innerText = "Enter valid radius and height.";
+        }
+    }
+
+    // Cone Calculation
+    function calculateCone() {
+        const radius = parseFloat(document.getElementById('coneRadius').value);
+        const height = parseFloat(document.getElementById('coneHeight').value);
+        if (radius > 0 && height > 0) {
+            const volume = (1 / 3) * Math.PI * Math.pow(radius, 2) * height;
+            const slantHeight = Math.sqrt(Math.pow(radius, 2) + Math.pow(height, 2));
+            const surfaceArea = Math.PI * radius * (radius + slantHeight);
+            document.getElementById('coneResult').innerText = 
+                `Volume: ${volume.toFixed(2)}, Surface Area: ${surfaceArea.toFixed(2)}`;
+        } else {
+            document.getElementById('coneResult').innerText = "Enter valid radius and height.";
+        }
+    }
+
+    // Rectangular Prism Calculation
+    function calculateRectPrism() {
+        const length = parseFloat(document.getElementById('rectPrismLength').value);
+        const width = parseFloat(document.getElementById('rectPrismWidth').value);
+        const height = parseFloat(document.getElementById('rectPrismHeight').value);
+        if (length > 0 && width > 0 && height > 0) {
+            const volume = length * width * height;
+            const surfaceArea = 2 * (length * width + width * height + height * length);
+            document.getElementById('rectPrismResult').innerText = 
+                `Volume: ${volume.toFixed(2)}, Surface Area: ${surfaceArea.toFixed(2)}`;
+        } else {
+            document.getElementById('rectPrismResult').innerText = "Enter valid dimensions.";
+        }
+    }
+
+    // Pyramid Calculation
+    function calculatePyramid() {
+        const baseLength = parseFloat(document.getElementById('pyramidBaseLength').value);
+        const baseWidth = parseFloat(document.getElementById('pyramidBaseWidth').value);
+        const height = parseFloat(document.getElementById('pyramidHeight').value);
+        if (baseLength > 0 && baseWidth > 0 && height > 0) {
+            const volume = (1 / 3) * baseLength * baseWidth * height;
+            const slantHeight = Math.sqrt(Math.pow(height, 2) + Math.pow(baseLength / 2, 2));
+            const surfaceArea = 
+                baseLength * baseWidth + baseLength * slantHeight + baseWidth * slantHeight;
+            document.getElementById('pyramidResult').innerText = 
+                `Volume: ${volume.toFixed(2)}, Surface Area: ${surfaceArea.toFixed(2)}`;
+        } else {
+            document.getElementById('pyramidResult').innerText = "Enter valid dimensions.";
+        }
+    }
+</script>
+
+
+</body>
+</html>

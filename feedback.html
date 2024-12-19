@@ -4,7 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback form</title>
-    <link rel="stylesheet" href="form.css">
+    
+    <style>
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #e0f7fa; /* Changed background color of the whole page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form Container */
+form {
+    background: #fff; /* Keeping the form background white for contrast */
+    border: 2px solid #f1f1f1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 30px 40px;
+    border-radius: 10px;
+    max-width: 450px;
+    width: 100%;
+    transition: transform 0.3s;
+}
+
+form:hover {
+    transform: scale(1.02);
+}
+
+/* Heading Styling */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Input Fields */
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styling */
+button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    form {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+.home-button {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #007BFF;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
 </head>
 <body>
     <h1>Feedback Form</h1>
@@ -38,6 +156,42 @@
         <button type="submit">Submit</button>
         <p id="thank" style="text-align: center;"></p>
     </form>
-    <script src="./main.js"></script>
+
+
+
+
+    <script>
+    // Wait until the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+    // Select the form
+    const form = document.querySelector("form");
+
+    // Add a submit event listener
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();  // Prevent default form submission behavior
+
+        // Fetch values from form inputs
+        const name = document.getElementById("myname").value;
+        const email = document.getElementById("myemail").value;
+        const division = document.getElementById("div1").value;
+        const suggestion = document.getElementById("myarea").value;
+
+        if (name && email && division && suggestion) {        
+            // Log the data to the console
+            console.log("Feedback Submitted:");
+            console.log("Name:", name);
+            console.log("Email:", email);
+            console.log("Division:", division);
+            console.log("Suggestion:", suggestion);
+        
+            document.getElementById("thank").innerHTML = `Thank you ${name} for your feedback`
+        } else {
+            alert("Enter require fields!")
+        }
+        // Optional: Clear the form fields
+        form.reset();
+    });
+});
+    </script>
 </body>
 </html>
