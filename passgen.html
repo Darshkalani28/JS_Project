@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to bottom right, #a8e0f1, #f0e1f1);
+            color: #333;
+        }
+
+        h1 {
+            color: #4a90e2;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        label {
+            margin-left: 5px;
+            margin-right: 15px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .output {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #e9f7fa;
+            font-family: monospace;
+            font-size: 20px;
+            color: #333;
+            transition: background 0.3s;
+        }
+
+        .output:hover {
+            background: #d1f0f5;
+        }
+
+        #mybtn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #mybtn:hover {
+            background-color: #357ab8;
+            transform: scale(1.05);
+        }
+
+        #mybtn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <h1>Password Generator</h1>
+    <div class="container">
+        <div class="options">
+            <input type="checkbox" id="small"><label for="small">Small Alphabet</label>
+            <input type="checkbox" id="big"><label for="big">Capital Alphabet</label>
+            <input type="checkbox" id="num"><label for="num">Number</label>
+            <input type="checkbox" id="spec"><label for="spec">Special Character</label>
+        </div>
+        <button id="mybtn">Generate Password</button>
+        <div class="output" id="passwordOutput">Your password will appear here</div>
+    </div>
+
+    <script>
+        document.getElementById('mybtn').addEventListener('click', () => {
+            const smallLetters = "abcdefghijklmnopqrstuvwxyz";
+            const bigLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const numbers = "0123456789";
+            const special = "!@#$%^&*()_+{}[]|<>?/";
+
+            let block = "";
+            if (document.getElementById('small').checked) block += smallLetters;
+            if (document.getElementById('big').checked) block += bigLetters;
+            if (document.getElementById('num').checked) block += numbers;
+            if (document.getElementById('spec').checked) block += special;
+
+            if (block === "") {
+                document.getElementById('passwordOutput').innerText = "Please select at least one option!";
+                return;
+            }
+
+            let password = "";
+            const length = 14;
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * block.length);
+                password += block.charAt(randomIndex);
+            }
+
+            document.getElementById('passwordOutput').innerText = password;
+        });
+    </script>
+</body>
+</html>
