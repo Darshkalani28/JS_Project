@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance System</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .webcam-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #webcam {
+            border: 2px solid #1a73e8;
+            border-radius: 8px;
+            width: 400px;
+            height: 300px;
+        }
+
+        .status-box {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .status {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .status span {
+            font-weight: bold;
+        }
+
+        #recognition {
+            color: #1a73e8;
+        }
+
+        #attendance.present {
+            color: #28a745;
+        }
+
+        #attendance.absent {
+            color: #dc3545;
+        }
+
+        .log-container {
+            margin-top: 20px;
+        }
+
+        #attendanceLog {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .log-entry {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .present-entry {
+            color: #28a745;
+        }
+
+        .absent-entry {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance System</h1>
+
+        <div class="camera-section">
+            <div class="webcam-container">
+                <video id="webcam" autoplay playsinline></video>
+            </div>
+
+            <div class="status-box">
+                <div id="status">Initializing...</div>
+                <div id="confidence"></div>
+            </div>
+        </div>
+
+        <div class="attendance-records">
+            <h2>Today's Attendance</h2>
+            <div class="record-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-log">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MODEL_URL = 'https://teachablemachine.withgoogle.com/models/17w1a0qDP/';
+        let model, webcam, maxPredictions;
+        let lastRecordTime = 0;
+        const RECORD_INTERVAL = 5000;
+
+        async function init() {
+            const modelURL = MODEL_URL + "model.json";
+            const metadataURL = MODEL_URL + "metadata.json";
+
+            try {
+                // Load the model
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+
+                // Setup webcam
+                const flip = true;
+                webcam = new tmImage.Webcam(640, 480, flip);
+                await webcam.setup();
+                await webcam.play();
+
+                // Connect webcam to video element
+                document.getElementById("webcam").srcObject = webcam.webcam.srcObject;
+
+                // Start the prediction loop
+                window.requestAnimationFrame(loop);
+
+                // Update status
+                document.getElementById("status").textContent = "System Ready";
+            } catch (error) {
+                document.getElementById("status").textContent = "Error: Please check camera permissions";
+                console.error(error);
+            }
+        }
+
+        async function loop() {
+            webcam.update();
+            await predict();
+            window.requestAnimationFrame(loop);
+        }
+
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);
+            const statusDiv = document.getElementById("status");
+            const confidenceDiv = document.getElementById("confidence");
+
+            // Get predictions (assuming that 0 is for "present" and 1 is for "absent")
+            const presentProb = prediction[1].probability;  // For "present"
+            const absentProb = prediction[0].probability;  // For "absent"
+
+            // Update status display
+            if (presentProb > 0.8) {  // If "present" is detected with confidence > 80%
+                statusDiv.innerHTML = "<span class='present'>Darsh is present</span>";
+                confidenceDiv.textContent = `Confidence: ${(presentProb * 100).toFixed(1)}%`;
+            } else {
+                statusDiv.innerHTML = "<span class='absent'>Darsh is absent</span>";
+                confidenceDiv.textContent = `Confidence: ${(absentProb * 100).toFixed(1)}%`;
+            }
+
+            // Record attendance periodically
+            const currentTime = Date.now();
+            if (currentTime - lastRecordTime >= RECORD_INTERVAL) {
+                recordAttendance(presentProb > 0.8, Math.max(presentProb, absentProb));
+                lastRecordTime = currentTime;
+            }
+        }
+
+        function recordAttendance(isPresent, confidence) {
+            const table = document.getElementById("attendance-log");
+            const row = document.createElement("tr");
+            const currentTime = new Date().toLocaleTimeString();
+
+            row.innerHTML = `
+                <td>${currentTime}</td>
+                <td><span class="${isPresent ? 'present' : 'absent'}">${isPresent ? 'Present' : 'Absent'}</span></td>
+                <td>${(confidence * 100).toFixed(1)}%</td>
+            `;
+
+            // Add new record at the top of the table
+            if (table.firstChild) {
+                table.insertBefore(row, table.firstChild);
+            } else {
+                table.appendChild(row);
+            }
+
+            // Keep only the last 50 records
+            while (table.children.length > 50) {
+                table.removeChild(table.lastChild);
+            }
+        }
+
+        // Initialize the system when the page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
